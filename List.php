@@ -99,7 +99,7 @@ class LinkList{
 			}
 			$e = $current->next->value;
 		}
-		return ret;
+		return $ret;
     }
 
     public function move($i,$step = 1){
