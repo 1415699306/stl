@@ -5,139 +5,62 @@
  * Date: 2018/1/29
  * Time: 10:24
  */
-class Node{
-    public $value;
+class LinkNode{
+    public $data = 0;
     public $next = null;
-    public function __construct()
+    public function __construct($data = null)
     {
-
+        $this->data = $data;
     }
 }
 
-class LinkList{
-    public $m_header;
+class LinkList
+{
     public $m_length;
-    public $m_step;
-    public $m_current;
+    public $header;
 
     public function __construct()
     {
-        $this->m_length = 0;
-        $this->m_step = 1;
-        $this->m_current = null;
-        $this->m_header = new Node();
+        $this->header = new LinkNode();
     }
 
-    public function position($i = 0){
-        $ret = $this->m_header;
-        if($ret){
-            for($p=0;$p<$i;$p++){
-                $ret = $ret->next;
-            }
-        }
-        return $ret;
-    }
-
-    public function insert($i,$e){
-        $ret = false;
-        if($i>=0){
-            $ret = true;
-        }
-        if($ret){
-            $node = new Node();
-            $current = $this->m_header;
-            for($p=0;$p<$i;$p++){
+    public function insert($pos, $node = null)
+    {
+        $current = $this->header;
+        if($pos>0){
+            for($i=1;$i<$pos;$i++){
                 $current = $current->next;
             }
-            $node->value = $e;
+            //$current->next = $node;
             $node->next = $current->next;
             $current->next = $node;
             $this->m_length++;
         }
+        return true;
     }
 
-    public function remove($i){
-        $ret = false;
-        if(($i>=0 && $i<$this->m_length)){
-            $ret = true;
-        }
-        if($ret){
-            $current = $this->m_header;
-            for($p=0;$p<$i;$p++){
+    public function get($pos){
+        $ret = null;
+        if($pos>0 && $pos<=$this->m_length){
+            $current = $this->header;
+            for($i=0;$i<$pos;$i++){
                 $current = $current->next;
+            }
+            $ret = $current->next;
+        }
+        return $ret;
+    }
+
+    public function delete($pos){
+        $current = $this->header;
+        if($current!=null && $pos>=0 && $pos<$this->m_length){
+            for($i=0;$i<$pos;$i++){
+                $current=$current->next;
             }
             $ret = $current->next;
             $current->next = $ret->next;
             $this->m_length--;
         }
+        return true;
     }
-
-    public function set($i,$e){
-        $ret = false;
-        if(($i>=0 && $i<$this->m_length)){
-            $ret = true;
-        }
-        if($ret){
-            $current = $this->m_header;
-            for($p=0;$p<$i;$p++){
-                $current = $current->next;
-            }
-            $current->next->value = $e;
-        }
-        return $ret;
-    }
-
-    public function get($i){
-        $ret = false;
-        if(($i>=0 && $i<$this->m_length)){
-            $ret = true;
-        }
-		if($ret){
-            $current = $this->m_header;
-            for($p=0;$p<$i;$i++){
-                $current = $current->next;
-			}
-			$e = $current->next->value;
-		}
-		return $ret;
-    }
-
-    public function move($i,$step = 1){
-        $ret = false;
-        if(($i>=0 && $i<$this->m_length && $step>0)){
-            $ret = true;
-        }
-		if($ret){
-            $this->m_current = $this->position($i)->next;
-            $this->m_step = $step;
-        }
-		return $ret;
-    }
-
-    public function end(){
-        return ($this->m_current == null);
-    }
-
-    public function current(){
-        if(!$this->end()){
-            return $this->m_current->value;
-        }
-    }
-
-    public function next(){
-        $i = 0;
-        while($i<$this->m_step && !$this->end()){
-            $this->m_current = $this->m_current->next;
-            $i++;
-        }
-        return ($i = $this->m_step);
-    }
-}
-
-$list = new LinkList();
-for($i=0;$i<5;$i++){
-    $list->insert(0,$i);
-}
-for($list->move(0);!$list->end();$list->next()){
-    echo $list->current().'</br>';
 }
