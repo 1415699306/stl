@@ -5,6 +5,11 @@ class TreeNode{
     public $lchild=null;
     public $rchild=null;
 
+    static $front = 0;
+    static $rear=0;
+
+    static $a=[];
+
     public function __construct($data = null)
     {
         $this->data = $data;
@@ -13,7 +18,7 @@ class TreeNode{
 
 
 function displayNode(TreeNode $node){
-    echo $node->data;
+    echo $node->data.'</br>';
 }
 
 function preOrder($root){
@@ -95,6 +100,16 @@ function LevelOrder($root){
     }
 }
 
+function EnQueue($node){
+    TreeNode::$a[TreeNode::$rear++]=$node;
+}
+
+function DeQueue(){
+    return TreeNode::$a[TreeNode::$front++];
+}
+
+
+
 $tree = new TreeNode();
 $tree->data = 1;
 $tree->lchild=new TreeNode();
@@ -120,7 +135,7 @@ $tree->rchild->rchild->rchild=NULL;
 $tree->lchild->lchild->data=4;
 $tree->lchild->lchild->lchild=NULL;
 $tree->lchild->lchild->rchild=NULL;
-
+/*
 recv_preOrder($tree);
 echo "</br>";
 recv_midOrder($tree);
@@ -128,4 +143,19 @@ echo "</br>";
 recv_endOrder($tree);
 echo "</br>";
 LevelOrder($tree);
-echo "</br>";
+echo "</br>";*/
+
+//层次遍历二叉树
+EnQueue($tree);
+while(TreeNode::$front<TreeNode::$rear) {
+    //队头结点出队
+    $p=DeQueue();
+    displayNode($p);
+    //将队头结点的左右孩子依次入队
+    if ($p->lchild!=NULL) {
+        EnQueue($p->lchild);
+    }
+    if ($p->rchild!=NULL) {
+        EnQueue($p->rchild);
+    }
+}
