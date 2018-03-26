@@ -71,6 +71,30 @@ function recv_endOrder($root){
     echo $root->data . ' ';
 }
 
+//递归版
+function level_order1($root,$level){
+    if($root == NULL || $level < 1){
+        return;
+    }
+    if($level == 1){
+        echo $root->data.' ';
+        return;
+    }
+    if($root->rchild!=null){
+        level_order1($root->rchild,$level-1);
+    }
+    if($root->lchild!=null){
+        level_order1($root->lchild,$level-1);
+    }
+}
+
+function LevelOrder($root){
+    $level = 3;
+    for($i = 1;$i <= $level;$i ++){
+        level_order1($root,$i);
+    }
+}
+
 $tree = new TreeNode();
 $tree->data = 1;
 $tree->lchild=new TreeNode();
@@ -102,4 +126,6 @@ echo "</br>";
 recv_midOrder($tree);
 echo "</br>";
 recv_endOrder($tree);
+echo "</br>";
+LevelOrder($tree);
 echo "</br>";
