@@ -73,3 +73,37 @@ function quick_sort($arr){
         return $arr;
     }
 }
+
+//希尔排序
+function shell_sort($arr){
+    $count = count($arr);
+    $inc = $count;
+    do{
+        $inc=ceil($inc/2);
+        for($i=$inc;$i<$count;$i++){
+            $min = $arr[$i];
+            for($j=$i-$inc;$j>=0 && ($arr[$j+$inc] < $arr[$j]);$j -= $inc){
+                $arr[$j+$inc] = $arr[$j];
+            }
+            $arr[$j+$inc] = $min;
+        }
+    }while($inc>1);
+
+    /*$count = count($arr);
+    $inc = $count;
+    do {
+        //计算增量
+        $inc = ceil($inc / 2);
+        for ($i = $inc; $i < $count; $i++) {
+            $temp = $arr[$i];    //设置哨兵
+            //需将$temp插入有序增量子表
+            for ($j = $i - $inc; $j >= 0 && $arr[$j + $inc] < $arr[$j]; $j -= $inc) {
+                $arr[$j + $inc] = $arr[$j]; //记录后移
+            }
+            //插入
+            $arr[$j + $inc] = $temp;
+        }
+        //增量为1时停止循环
+    } while ($inc > 1);*/
+    return $arr;
+}
