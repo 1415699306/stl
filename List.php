@@ -63,4 +63,44 @@ class LinkList
         }
         return true;
     }
+    
+    //链表反转
+    public function ReverseList($head){
+        if($head == null){
+            return null;
+        }
+        $pre=null;
+        $cur=null;
+        while($head!=null){
+            $next = $head->next;
+            $head->next = $pre;
+            $pre = $head;
+            $head = $next;
+        }
+        return $pre;
+    }
+    
+    //Given 1->1->2, return 1->2.
+    //Given 1->1->2->3->3, return 1->2->3.
+    public function deleteDuplicates($head){
+        if($head == null || $head->next == null){
+            return null;
+        }
+        $q = $head;
+        while($q){
+            /*if( $q->next!=NULL && $q->next->value==$q->value ) {
+                $p=$q->next;
+                $q->next=$p->next;
+            }else{
+                $q=$q->next;
+            }*/
+            if($q->next!=null && $q->value==$q->next->value){
+                $p=$q->next;
+                $q->next=$p->next;
+            }else{
+                $q=$q->next;
+            }
+        }
+        return $head;
+    }
 }
