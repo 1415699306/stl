@@ -103,4 +103,32 @@ class LinkList
         }
         return $head;
     }
+    
+    //Partition List （链表处理）
+    /*
+     * Given 1->4->3->2->5->2 and x = 3,
+        return 1->2->2->4->3->5.
+     * */
+    public function partition($head,$x){
+        $head1 = new Node();
+        $head2 = new Node();
+        $p1=$head1;
+        $p2=$head2;
+        while($head->next!=null){
+            if($head->value<$x)
+            {
+                $p1->next=new Node($head->value);
+                $p1=$p1->next;
+            }
+            else
+            {
+                $p2->next=new Node($head->value);
+                $p2=$p2->next;
+            }
+            $head=$head->next;
+        }
+        if($head2->next!=NULL) $p1->next=$head2->next;
+        $temp=$head1->next;
+        return $temp;
+    }
 }
